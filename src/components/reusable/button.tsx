@@ -2,10 +2,10 @@ import { memo } from "react";
 
 type ButtonProps={
     type:"submit" | "reset" | "button" | undefined;
-    text:string;
+    children:any;
 }
 
-const Button = memo(({ type, text } : ButtonProps) => {
+const Button = memo(({ type, children } : ButtonProps) => {
     return(
         <>
             <button
@@ -18,7 +18,7 @@ const Button = memo(({ type, text } : ButtonProps) => {
                     dark:focus:ring-blue-800
                 "
             >
-                {text}
+                {children}
             </button>
         </>
     )

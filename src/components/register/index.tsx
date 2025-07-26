@@ -78,7 +78,14 @@ const Register = memo(() => {
 
     return(
         <>
-        <form className="max-w-sm mx-auto" onSubmit={handleSubmit}>
+        <form 
+            className="
+                max-w-sm mx-auto w-full p-4 bg-white border 
+                border-gray-200 rounded-lg shadow-sm sm:p-6 
+                md:p-8 dark:bg-gray-800 dark:border-gray-700
+            " 
+            onSubmit={handleSubmit}
+        >
 
             <div className="mb-5">
                 <Label type="name" text="Your name"/>
@@ -134,7 +141,9 @@ const Register = memo(() => {
                 />
             </div>
 
-            <Button type="submit" text="Submit" />
+            <Button type="submit">
+                Register
+            </Button>
 
         </form>
         </>
