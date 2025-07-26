@@ -1,10 +1,13 @@
-import Login from "./components/login"
+
+import  { Toaster } from 'react-hot-toast';
+import Register from "./components/register";
 
 function App() {
 
   return (
     <>
-      <Login/>
+      <Register/>
+      <Toaster/>
     </>
   )
 }

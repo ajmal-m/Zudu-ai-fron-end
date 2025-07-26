@@ -2,6 +2,7 @@ import { memo, useCallback, useState } from "react";
 import Label from "../reusable/label";
 import Input from "../reusable/input";
 import Button from "../reusable/button";
+import toast from 'react-hot-toast';
 
 const Login = memo(() => {
 
@@ -22,6 +23,7 @@ const Login = memo(() => {
     const handleSubmit = useCallback((e : React.FormEvent<HTMLFormElement>) => {
         e.preventDefault();
         console.log(formData); 
+        toast.success("Hello Guys")
     }, [formData]);
 
     return(
