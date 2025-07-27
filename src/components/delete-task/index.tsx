@@ -1,10 +1,23 @@
-import  { memo, useState } from "react";
+import  { memo, useCallback, useState } from "react";
+import axiosInstance from "../../lib/axios";
+import type { Task } from "../../Types";
 
-const DeleteTask = memo(() => {
+const DeleteTask = memo(({ task }: { task : Task}) => {
   const [isOpen, setIsOpen] = useState(false);
 
   const closeModal = () => setIsOpen(false);
   const openModal = () => setIsOpen(true);
+
+
+  const deleteTask = useCallback(async () => {
+    setIsOpen(false);
+    try {
+        const {data} = await axiosInstance.delete(`/tasks/${task._id}`);
+        console.log(data)
+    } catch (error) {
+        console.log(error);
+    }
+  }, [isOpen])
 
   return (
     <>
@@ -77,7 +90,7 @@ const DeleteTask = memo(() => {
                   Are you sure you want to delete this task?
                 </h3>
                 <button
-                  onClick={closeModal}
+                  onClick={deleteTask}
                   type="button"
                   className="text-white bg-red-600 hover:bg-red-800 focus:ring-4 
                              focus:outline-none focus:ring-red-300 dark:focus:ring-red-800 

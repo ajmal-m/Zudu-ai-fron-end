@@ -45,7 +45,7 @@ const Card = memo(({ task }:{ task: Task}) => {
                 {/* Action Button */}
                <div className="flex gap-4">
                  <EditTask currentTask={task}/>
-                 <DeleteTask/>
+                 <DeleteTask task={task}/>
                </div>
             </div>
         </div>
