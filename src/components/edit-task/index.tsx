@@ -12,6 +12,7 @@ import { useAuth } from "../../context/authContext";
 import type { Task } from "../../Types";
 import { useTaskContext } from "../../context/taskContext";
 import { useUserContext } from "../../context/usersContext";
+import toast from 'react-hot-toast';
 
 
 const priorities = [
@@ -61,6 +62,9 @@ const EditTask = memo(({currentTask}: { currentTask:Task}) => {
             ...task,
             managedBy: user?._id
           });
+          setTimeout(() => {
+            toast.success("Task updated successfully");
+          }, 2000);
           setIsOpen(false);
           getAllTasks();
         } catch (error) {

@@ -11,6 +11,7 @@ import AssigneeSelector from "./assignee-selectore";
 import { useAuth } from "../../context/authContext";
 import { useTaskContext } from "../../context/taskContext";
 import { useUserContext } from "../../context/usersContext";
+import toast from 'react-hot-toast';
 
 
 const priorities = [
@@ -56,6 +57,9 @@ const CreateTask = () => {
             ...task,
             managedBy: user?._id
           });
+          setTimeout(() => {
+            toast.success("New task created success");
+          }, 2000);
           setIsOpen(false);
           getAllTasks()
         } catch (error) {
