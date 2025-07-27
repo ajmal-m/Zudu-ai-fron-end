@@ -1,14 +1,12 @@
-import { memo, useEffect, useState } from "react";
+import { memo } from "react";
 import Card from "../card";
 import Pagination from "../pagination";
 import CreateTask from "../create-task";
 import { useAuth } from "../../context/authContext";
-import axiosInstance from "../../lib/axios";
-import type {  TaskResponse } from "../../Types";
 import  { Spinner } from "../reusable/loader";
 import Selector from "./status-selector";
 import Button from "../reusable/button";
-import RightDrawer from "./filters";
+import { useTaskContext } from "../../context/taskContext";
 
 
 const STATUS_OPTIONS = [
@@ -25,39 +23,7 @@ const SORT_OPTIONS = [
 const Home = memo(() => {
 
     const {logout} = useAuth();
-    const [page, setPage] = useState(1);
-    const [limit] = useState(10);
-    const [totalPages, setTotalPages] = useState(0);
-    const [tasks, setTasks] = useState<any[]>([]);
-    const [loading, setLoading] = useState(false);
-    const [status, setStatus] = useState<string | null>(null);
-    const [order, setOrder] = useState<string | null>(null);
-
-
-
-    useEffect(() => {
-        const getAllTasks = async () => {
-            setLoading(true);
-            try {
-                let query = `page=${page}&limit=${limit}`;
-                if(status){
-                    query+=`&status=${status}`;
-                }
-                if(order){
-                    query += `&order=${order}`;
-                }
-                const {data} : {data: TaskResponse} = await axiosInstance.get(`/tasks?${query}`);
-                setTasks([ ...data?.data]);
-                setTotalPages(data.totalPages);
-                setLoading(false);
-            } catch (error) {
-                setLoading(false);
-                console.log(error);
-            }
-        }
-
-        getAllTasks();
-    }, [page, limit, status, order])
+    const {loading, tasks, setStatus, page, totalPages, setPage, setOrder} = useTaskContext();
 
     return(
         <div className="flex flex-col h-screen">
@@ -88,8 +54,8 @@ const Home = memo(() => {
                 <Pagination 
                     totalPages={totalPages} 
                     page={page} 
-                    nextPage={() => setPage(page => page+1)} 
-                    prevPage={() => setPage(page => page-1)}
+                    nextPage={() => setPage(page + 1)} 
+                    prevPage={() => setPage(page - 1)}
                 />
             </div>
         </div>

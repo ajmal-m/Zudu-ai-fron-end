@@ -9,6 +9,7 @@ import DateInput from "../reusable/date-picker";
 import axiosInstance from "../../lib/axios";
 import AssigneeSelector from "./assignee-selectore";
 import { useAuth } from "../../context/authContext";
+import { useTaskContext } from "../../context/taskContext";
 
 
 const priorities = [
@@ -18,6 +19,7 @@ const priorities = [
 ];
 
 const CreateTask = () => {
+    const {getAllTasks} = useTaskContext();
     const [isOpen, setIsOpen] = useState(false);
 
     const toggleDrawer = () => setIsOpen(!isOpen);
@@ -50,12 +52,12 @@ const CreateTask = () => {
     const handleSubmit = useCallback(async (e : React.FormEvent<HTMLFormElement>) => {
         e.preventDefault();
         try {
-          console.log(user)
-          const {data} = await axiosInstance.post('/tasks', {
+          await axiosInstance.post('/tasks', {
             ...task,
             managedBy: user?._id
           });
-          console.log(data);
+          setIsOpen(false);
+          getAllTasks()
         } catch (error) {
           console.log(error);
         }

@@ -10,6 +10,7 @@ import axiosInstance from "../../lib/axios";
 import AssigneeSelector from "./assignee-selector";
 import { useAuth } from "../../context/authContext";
 import type { Task } from "../../Types";
+import { useTaskContext } from "../../context/taskContext";
 
 
 const priorities = [
@@ -19,12 +20,15 @@ const priorities = [
 ];
 
 const EditTask = memo(({currentTask}: { currentTask:Task}) => {
+
+   const {user} = useAuth();
+   const {  getAllTasks } = useTaskContext();
+
     const [isOpen, setIsOpen] = useState(false);
 
     const toggleDrawer = () => setIsOpen(!isOpen);
     const closeDrawer = () => setIsOpen(false);
 
-    const {user} = useAuth();
 
     const [task, setTask] = useState({
       title: currentTask.title,
@@ -52,11 +56,12 @@ const EditTask = memo(({currentTask}: { currentTask:Task}) => {
         e.preventDefault();
         try {
           console.log(user)
-          const {data} = await axiosInstance.put(`/tasks/${currentTask._id}`, {
+          await axiosInstance.put(`/tasks/${currentTask._id}`, {
             ...task,
             managedBy: user?._id
           });
-          console.log(data);
+          setIsOpen(false);
+          getAllTasks();
         } catch (error) {
           console.log(error);
         }

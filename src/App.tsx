@@ -8,6 +8,7 @@ const Home = lazy(() => import('./components/Home/index'));
 const Login = lazy(() => import('./pages/login'));
 const Register = lazy(() => import('./pages/register'));
 import ProtectedRoute from './components/ProtectedRoute';
+import { TaskProvider } from './context/taskContext';
 
 
 function App() {
@@ -18,7 +19,9 @@ function App() {
         <Routes>
           <Route path='/' element={
             <ProtectedRoute>
-              <Home/>
+              <TaskProvider>
+                <Home/>
+              </TaskProvider>
             </ProtectedRoute>
           }/>
           <Route path='/login' element={<Login/>}/>

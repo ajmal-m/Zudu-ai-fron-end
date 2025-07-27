@@ -1,8 +1,11 @@
 import  { memo, useCallback, useState } from "react";
 import axiosInstance from "../../lib/axios";
 import type { Task } from "../../Types";
+import { useTaskContext } from "../../context/taskContext";
 
 const DeleteTask = memo(({ task }: { task : Task}) => {
+
+  const {getAllTasks, page} = useTaskContext();
   const [isOpen, setIsOpen] = useState(false);
 
   const closeModal = () => setIsOpen(false);
@@ -12,8 +15,8 @@ const DeleteTask = memo(({ task }: { task : Task}) => {
   const deleteTask = useCallback(async () => {
     setIsOpen(false);
     try {
-        const {data} = await axiosInstance.delete(`/tasks/${task._id}`);
-        console.log(data)
+        await axiosInstance.delete(`/tasks/${task._id}`);
+        getAllTasks();
     } catch (error) {
         console.log(error);
     }
