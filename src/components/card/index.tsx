@@ -1,13 +1,35 @@
-import { memo } from "react";
+import { memo, useCallback } from "react";
 import Badge from "../reusable/badge";
 import type { Task } from "../../Types";
 import { formatDate } from "../../lib/utils";
 import EditTask from "../edit-task";
 import DeleteTask from "../delete-task";
+import Button from "../reusable/button";
+import axiosInstance from "../../lib/axios";
+import { useTaskContext } from "../../context/taskContext";
+import toast from 'react-hot-toast';
 
 const Card = memo(({ task }:{ task: Task}) => {
+
+    const {getAllTasks} = useTaskContext();
+
+    const markTaskDone = useCallback( async () => {
+        try {
+            await axiosInstance.put(`/tasks/${task._id}`, {
+                status:"Done"
+            });
+            setTimeout(() => {
+                toast.success("Task marked as Done")
+            }, 2000);
+            getAllTasks();
+        } catch (error) {
+            console.log(error);
+        }
+    }, []);
+
+
     return(
-        <div className="max-w-[400px] min-w-[300px] bg-white border border-gray-200 rounded-lg shadow-sm dark:bg-gray-800 dark:border-gray-700 h-[300px]">
+        <div className="w-[350px] bg-white border border-gray-200 rounded-lg shadow-sm dark:bg-gray-800 dark:border-gray-700 h-[300px]">
             <div className="p-5">
                 {/* Title */}
                 <h5 className="mb-2 text-2xl font-bold tracking-tight text-gray-900 dark:text-white">
@@ -46,6 +68,13 @@ const Card = memo(({ task }:{ task: Task}) => {
                <div className="flex gap-4">
                  <EditTask currentTask={task}/>
                  <DeleteTask task={task}/>
+                 {
+                    task.status !== 'Done' && (
+                        <Button type="button" onClick={markTaskDone}>
+                            Mark as Done
+                        </Button>      
+                    )
+                 }
                </div>
             </div>
         </div>

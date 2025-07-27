@@ -55,35 +55,44 @@ export const TaskProvider = ({ children }: { children: any }) => {
             setLoading(false);
             console.log(error);
         }
-    }, [page, limit, status, order])
+    }, [page, limit, status, order]);
 
 
-  useEffect(() => {
-    getAllTasks();
-}, [page, limit, status, order])
+    const markTaskDone = useCallback( async (id: string) => {
+      try {
+        
+      } catch (error) {
+        console.log(error);
+      }
+    }, [])
 
-  return (
-    <TaskContext.Provider
-      value={{
-        page,
-        limit,
-        totalPages,
-        tasks,
-        loading,
-        status,
-        order,
-        setPage,
-        setTotalPages,
-        setTasks,
-        setLoading,
-        setStatus,
-        setOrder,
-        getAllTasks
-      }}
-    >
-      {children}
-    </TaskContext.Provider>
-  );
+
+    useEffect(() => {
+        getAllTasks();
+    }, [page, limit, status, order])  
+
+    return (
+      <TaskContext.Provider
+        value={{
+          page,
+          limit,
+          totalPages,
+          tasks,
+          loading,
+          status,
+          order,
+          setPage,
+          setTotalPages,
+          setTasks,
+          setLoading,
+          setStatus,
+          setOrder,
+          getAllTasks
+        }}
+      >
+        {children}
+      </TaskContext.Provider>
+    );
 };
 
 // 4. Hook for easier consumption
