@@ -10,11 +10,6 @@ type PaginationProps = {
 const Pagination = memo(({ totalPages, page, nextPage, prevPage} : PaginationProps) => {
   return (
     <div className="flex flex-col items-center">
-      {/* Help text */}
-      <span className="text-sm text-gray-700 dark:text-gray-400">
-        Showing page {page} of {totalPages} pages
-      </span>
-
       <div className="inline-flex mt-2 xs:mt-0">
         {/* Prev Button */}
         <button 

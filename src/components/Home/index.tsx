@@ -8,6 +8,7 @@ import type {  TaskResponse } from "../../Types";
 import  { Spinner } from "../reusable/loader";
 import Selector from "./status-selector";
 import Button from "../reusable/button";
+import RightDrawer from "./filters";
 
 
 const STATUS_OPTIONS = [
@@ -74,13 +75,16 @@ const Home = memo(() => {
                     )
                 }
             </div>
-            <div className="p-4 dark:bg-[#111827] flex gap-5 items-center">
-                <Button type="button" onClick={logout}>
-                     Logout
-                </Button>
+            <div className="p-4 dark:bg-[#111827] flex gap-5 items-center flex-wrap">
                 <CreateTask/>
                 <Selector updateChange={(e) => setStatus(e.target.value)} options={STATUS_OPTIONS} label="Filter By status"/>
                 <Selector updateChange={(e) => setOrder(e.target.value)} options={SORT_OPTIONS} label="Sort By"/>
+                <Button type="button" onClick={logout}>
+                     Logout
+                </Button>
+                <span className="text-sm text-gray-700 dark:text-gray-400">
+                    Showing page {page} of {totalPages} pages
+                </span>
                 <Pagination 
                     totalPages={totalPages} 
                     page={page} 
