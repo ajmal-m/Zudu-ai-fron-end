@@ -68,3 +68,34 @@ yarn dev
 ### Pagination , Theme toggler, Logout and sorting
 
 <img width="730" height="66" alt="zudu-pagination-dark-theme" src="https://github.com/user-attachments/assets/d8e25047-5a7d-4cfb-8ee5-9a54546a4624" />
+
+### 🗂️ Project Structure
+
+```bash
+vite-react-app/
+├── public/
+│   └── favicon.svg
+├── src/
+│   ├── assets/             # Static files (images, fonts, etc.)
+│   ├── components/         # Reusable UI components
+│   ├── context/            # ThemeContext and others
+│   ├── pages/              # Page-level components (routes)
+│   ├── App.tsx             # Main app entry
+│   └── main.tsx            # Vite entry point
+├── .env                    # Environment variables
+├── index.html              # Base HTML
+├── vite.config.ts          # Vite config
+└── README.md               # Project documentation
+
+
+```
+
+### 🛠️ Built With
+
+React
+
+Vite
+
+TypeScript
+
+Tailwind CSS (optional)
