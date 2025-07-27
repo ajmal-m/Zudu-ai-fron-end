@@ -7,6 +7,9 @@ import  { Spinner } from "../reusable/loader";
 import Selector from "./status-selector";
 import Button from "../reusable/button";
 import { useTaskContext } from "../../context/taskContext";
+import { useTheme } from "../../context/theme-context";
+import DarkIcon from "../icon/dark";
+import LightIcon from "../icon/light";
 
 
 const STATUS_OPTIONS = [
@@ -24,6 +27,7 @@ const Home = memo(() => {
 
     const {logout} = useAuth();
     const {loading, tasks, setStatus, page, totalPages, setPage, setOrder} = useTaskContext();
+    const {theme} = useTheme();
 
     return(
         <div className="flex flex-col h-screen dark:bg-[#111827] justify-between">
@@ -48,7 +52,7 @@ const Home = memo(() => {
                 <Button type="button" onClick={logout}>
                      Logout
                 </Button>
-                <span className="text-sm text-gray-700 dark:text-gray-400">
+                <span className="text-sm text-[black] dark:text-gray-400">
                     Showing page {page} of {totalPages} pages
                 </span>
                 <Pagination 
@@ -57,6 +61,9 @@ const Home = memo(() => {
                     nextPage={() => setPage(page + 1)} 
                     prevPage={() => setPage(page - 1)}
                 />
+                {
+                    theme === 'dark' ? <DarkIcon/> : <LightIcon/>
+                }
             </div>
         </div>
     )
