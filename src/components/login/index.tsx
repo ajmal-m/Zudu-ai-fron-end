@@ -3,10 +3,19 @@ import Label from "../reusable/label";
 import Input from "../reusable/input";
 import Button from "../reusable/button";
 import toast from 'react-hot-toast';
+import axiosInstance from "../../lib/axios";
+import { useAuth } from "../../context/authContext";
+import { useNavigate } from "react-router-dom";
+
+
+type FormDatasType = { email: string; password: string;}
 
 const Login = memo(() => {
 
-    const [formData, setFormData] = useState<{ email: string; password: string;}>({
+    const navigate = useNavigate();
+    const {login} = useAuth();
+
+    const [formData, setFormData] = useState<FormDatasType>({
         email: "",
         password: "",
     });
@@ -20,11 +29,41 @@ const Login = memo(() => {
     }, [formData]);
 
 
-    const handleSubmit = useCallback((e : React.FormEvent<HTMLFormElement>) => {
+    const handleSubmit = useCallback(async (e : React.FormEvent<HTMLFormElement>) => {
         e.preventDefault();
-        console.log(formData); 
-        toast.success("Hello Guys")
+        const formValidated = formValidation(formData);
+        if(formValidated){
+            try {
+                const {data} = await axiosInstance.post("/auth/login", {...formData});
+                localStorage.setItem("token", data?.token);
+                login(data);
+                navigate('/')
+            } catch (error: any) {
+                const errorMessage = error?.response?.data?.message;
+                errorMessage && toast.error(errorMessage);
+            }
+        }
     }, [formData]);
+
+
+    const formValidation= useCallback((values: FormDatasType) => {
+        let formValidated = true;
+
+        if (!values.email.trim()) {
+            formValidated = false;
+            toast.error("Email is required");
+        } else if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(values.email)) {
+            formValidated = false;
+            toast.error("Invalid email format");
+        }
+
+        if (!values.password) {
+            formValidated = false;
+            toast.error("Password is required");
+        }
+        return formValidated;
+
+    }, [formData])
 
     return(
         <>

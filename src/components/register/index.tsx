@@ -4,6 +4,7 @@ import Input from "../reusable/input";
 import Button from "../reusable/button";
 import toast from 'react-hot-toast';
 import RoleSelector from "./roleSelecter";
+import axiosInstance from "../../lib/axios";
 
 type FormDatasType = {
     name:string; 
@@ -32,10 +33,22 @@ const Register = memo(() => {
     }, [formData]);
 
 
-    const handleSubmit = useCallback((e : React.FormEvent<HTMLFormElement>) => {
+    const handleSubmit = useCallback(async (e : React.FormEvent<HTMLFormElement>) => {
         e.preventDefault();
-        console.log(formData); 
-        formValidation(formData)
+        const formValidated = formValidation(formData);
+        if(formValidated){
+            try {
+                const {data} = await axiosInstance.post('/auth/register', {
+                    name:formData.name,
+                    email:formData.email,
+                    password:formData.password,
+                    role:formData.role
+                });
+                console.log(data)
+            } catch (error) {
+                console.log(error);
+            }
+        }
     }, [formData]);
 
 

@@ -1,6 +1,7 @@
 import { memo } from "react";
 import Card from "../card";
 import Pagination from "../pagination";
+import CreateTask from "../create-task";
 
 const Home = memo(() => {
 
@@ -14,7 +15,8 @@ const Home = memo(() => {
                     ))
                 }
             </div>
-            <div className="p-4 dark:bg-[#111827]">
+            <div className="p-4 dark:bg-[#111827] flex justify-between items-center">
+                <CreateTask/>
                 <Pagination/>
             </div>
         </div>
