@@ -5,6 +5,8 @@ import Button from "../reusable/button";
 import toast from 'react-hot-toast';
 import RoleSelector from "./roleSelecter";
 import axiosInstance from "../../lib/axios";
+import { useAuth } from "../../context/authContext";
+import { useNavigate } from "react-router-dom";
 
 type FormDatasType = {
     name:string; 
@@ -15,6 +17,10 @@ type FormDatasType = {
 }
 
 const Register = memo(() => {
+
+    const {login} = useAuth();
+
+    const navigate = useNavigate();
 
     const [formData, setFormData] = useState<FormDatasType>({
         name:"",
@@ -44,9 +50,11 @@ const Register = memo(() => {
                     password:formData.password,
                     role:formData.role
                 });
-                console.log(data)
-            } catch (error) {
-                console.log(error);
+                login(data);
+                navigate('/');
+            } catch (error : any) {
+                const errorMessage = error?.response?.data?.message;
+                errorMessage && toast.error(errorMessage);
             }
         }
     }, [formData]);

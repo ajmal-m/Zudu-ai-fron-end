@@ -35,7 +35,6 @@ const Login = memo(() => {
         if(formValidated){
             try {
                 const {data} = await axiosInstance.post("/auth/login", {...formData});
-                localStorage.setItem("token", data?.token);
                 login(data);
                 navigate('/')
             } catch (error: any) {

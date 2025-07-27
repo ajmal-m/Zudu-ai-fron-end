@@ -2,9 +2,11 @@ import { memo } from "react";
 import Card from "../card";
 import Pagination from "../pagination";
 import CreateTask from "../create-task";
+import { useAuth } from "../../context/authContext";
 
 const Home = memo(() => {
 
+    const {logout} = useAuth();
 
     return(
         <div className="flex flex-col h-screen">
@@ -16,6 +18,9 @@ const Home = memo(() => {
                 }
             </div>
             <div className="p-4 dark:bg-[#111827] flex justify-between items-center">
+                <button onClick={logout}>
+                    Logout
+                </button>
                 <CreateTask/>
                 <Pagination/>
             </div>

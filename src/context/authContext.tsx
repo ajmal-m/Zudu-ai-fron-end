@@ -1,4 +1,5 @@
 import { createContext, useContext, useState, useEffect } from "react";
+import axiosInstance from "../lib/axios";
 
 // Define your User type
 type User = {
@@ -6,7 +7,7 @@ type User = {
   name: string;
   email: string;
   role: string;
-  token?: string; // optional: JWT or similar
+  token?: string | null; // optional: JWT or similar
 };
 
 // Context value shape
@@ -15,6 +16,7 @@ interface AuthContextType {
   login: (userData: User) => void;
   logout: () => void;
   isAuthenticated: boolean;
+  accessToken: string | null;
 }
 
 // Create context with default empty object
@@ -29,22 +31,35 @@ interface AuthProviderProps {
 export const AuthProvider = ({ children }: AuthProviderProps) => {
   const [user, setUser] = useState<User | null>(null);
   const [loading, setLoading] = useState(true);
+  const [accessToken, setAccessToken] = useState(localStorage.getItem('token'));
+
 
   useEffect(() => {
-    const storedUser = localStorage.getItem("authUser");
-    if (storedUser) {
-      setUser(JSON.parse(storedUser));
-    }
+    (async () => {
+      try {
+        const { data } = await axiosInstance.get('/auth/refresh');
+        console.log(data)
+        localStorage.setItem('token', data.accessToken);
+        localStorage.setItem('authUser', data.user);
+        setAccessToken(data.accessToken);
+      } catch {
+        setAccessToken(null);
+      }
+    })();
     setLoading(false);
   }, []);
 
   const login = (userData: User) => {
     setUser(userData);
+    setAccessToken(userData.token ?? null);
     localStorage.setItem("authUser", JSON.stringify(userData));
+    localStorage.setItem("token", JSON.stringify(userData?.token));
   };
 
   const logout = () => {
     setUser(null);
+    setAccessToken(null);
+    localStorage.removeItem("token");
     localStorage.removeItem("authUser");
   };
 
@@ -53,6 +68,7 @@ export const AuthProvider = ({ children }: AuthProviderProps) => {
     login,
     logout,
     isAuthenticated: !!user,
+    accessToken
   };
 
   return (
