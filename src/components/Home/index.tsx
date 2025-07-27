@@ -26,8 +26,8 @@ const Home = memo(() => {
     const {loading, tasks, setStatus, page, totalPages, setPage, setOrder} = useTaskContext();
 
     return(
-        <div className="flex flex-col h-screen">
-            <div className="flex justify-center flex-wrap gap-4 dark:bg-[#111827] h-[95vh] overflow-y-auto py-4">
+        <div className="flex flex-col h-screen dark:bg-[#111827] justify-between">
+            <div className="flex justify-center flex-wrap gap-4 dark:bg-[#111827] overflow-y-auto py-4">
                 {
 
                     loading ? (<Spinner/>):(
