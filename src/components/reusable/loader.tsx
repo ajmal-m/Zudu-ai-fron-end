@@ -1,10 +1,10 @@
 import { memo } from "react";
 import MainLayout from "../../layouts/mainLayout";
 
-const Loader = memo(() => {
 
-  return (
-    <MainLayout>
+export const Spinner = () => {
+    return(
+        <>
         <div role="status">
             <svg
                 aria-hidden="true"
@@ -42,6 +42,15 @@ const Loader = memo(() => {
             </svg>
             <span className="sr-only">Loading...</span>
         </div>
+        </>
+    )
+}
+
+const Loader = memo(() => {
+
+  return (
+    <MainLayout>
+        <Spinner/>
     </MainLayout>
   );
 });
