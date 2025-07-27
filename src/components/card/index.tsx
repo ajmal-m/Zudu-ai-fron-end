@@ -1,8 +1,9 @@
 import { memo } from "react";
 import Badge from "../reusable/badge";
-import Button from "../reusable/button";
 import type { Task } from "../../Types";
 import { formatDate } from "../../lib/utils";
+import EditTask from "../edit-task";
+import DeleteTask from "../delete-task";
 
 const Card = memo(({ task }:{ task: Task}) => {
     return(
@@ -42,9 +43,10 @@ const Card = memo(({ task }:{ task: Task}) => {
                 </div>
 
                 {/* Action Button */}
-                <Button type="button">
-                    Read more
-                </Button>
+               <div className="flex gap-4">
+                 <EditTask currentTask={task}/>
+                 <DeleteTask/>
+               </div>
             </div>
         </div>
     )

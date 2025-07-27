@@ -5,6 +5,7 @@ export interface UserRef {
 }
 
 export interface Task {
+  _id:string;
   title: string;
   description: string;
   status: "ToDo" | "InProgress" | "Done"; // or just string if dynamic
