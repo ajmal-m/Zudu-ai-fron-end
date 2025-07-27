@@ -11,6 +11,7 @@ import AssigneeSelector from "./assignee-selector";
 import { useAuth } from "../../context/authContext";
 import type { Task } from "../../Types";
 import { useTaskContext } from "../../context/taskContext";
+import { useUserContext } from "../../context/usersContext";
 
 
 const priorities = [
@@ -21,8 +22,9 @@ const priorities = [
 
 const EditTask = memo(({currentTask}: { currentTask:Task}) => {
 
-   const {user} = useAuth();
-   const {  getAllTasks } = useTaskContext();
+    const {user} = useAuth();
+    const {  getAllTasks } = useTaskContext();
+    const {users} = useUserContext();
 
     const [isOpen, setIsOpen] = useState(false);
 
@@ -40,7 +42,6 @@ const EditTask = memo(({currentTask}: { currentTask:Task}) => {
       managedBy: currentTask.managedBy._id      
     });
 
-    const [users, setUsers] = useState([]);
 
     
     const handleChange = useCallback((e: { target: { name: any; value: any; }; }) => {
@@ -67,14 +68,6 @@ const EditTask = memo(({currentTask}: { currentTask:Task}) => {
         }
     }, [task]);
 
-
-    useEffect(() => {
-      const getUsers = async () => {
-        const {data} = await axiosInstance.get('/users');
-        setUsers(data)
-      }
-      getUsers();
-    }, [])
   
 
   return (

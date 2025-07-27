@@ -10,6 +10,7 @@ import axiosInstance from "../../lib/axios";
 import AssigneeSelector from "./assignee-selectore";
 import { useAuth } from "../../context/authContext";
 import { useTaskContext } from "../../context/taskContext";
+import { useUserContext } from "../../context/usersContext";
 
 
 const priorities = [
@@ -20,6 +21,7 @@ const priorities = [
 
 const CreateTask = () => {
     const {getAllTasks} = useTaskContext();
+    const {users} = useUserContext();
     const [isOpen, setIsOpen] = useState(false);
 
     const toggleDrawer = () => setIsOpen(!isOpen);
@@ -36,8 +38,6 @@ const CreateTask = () => {
       dueDate: '' ,
       managedBy: ""       
     });
-
-    const [users, setUsers] = useState([]);
 
     
     const handleChange = useCallback((e: { target: { name: any; value: any; }; }) => {
@@ -62,15 +62,6 @@ const CreateTask = () => {
           console.log(error);
         }
     }, [task]);
-
-
-    useEffect(() => {
-      const getUsers = async () => {
-        const {data} = await axiosInstance.get('/users');
-        setUsers(data)
-      }
-      getUsers();
-    }, [])
   
 
   return (
