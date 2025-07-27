@@ -3,7 +3,7 @@ import axiosInstance from "../lib/axios";
 
 // Define your User type
 type User = {
-  id: string;
+  _id: string;
   name: string;
   email: string;
   role: string;
@@ -41,7 +41,8 @@ export const AuthProvider = ({ children }: AuthProviderProps) => {
         console.log(data)
         localStorage.setItem('token', data.accessToken);
         localStorage.setItem('authUser', data.user);
-        setAccessToken(data.accessToken);
+        setUser(data.user ?? null)
+        setAccessToken(data?.accessToken);
       } catch {
         setAccessToken(null);
       }

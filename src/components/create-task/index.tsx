@@ -1,4 +1,4 @@
-import  { useCallback, useState } from "react";
+import  { useCallback, useEffect, useState } from "react";
 import Label from "../reusable/label";
 import Input from "../reusable/input";
 import Button from "../reusable/button";
@@ -6,6 +6,9 @@ import TextArea from "../reusable/text-area";
 import CloseIcon from "../icon/close-icon";
 import Select from "../reusable/select";
 import DateInput from "../reusable/date-picker";
+import axiosInstance from "../../lib/axios";
+import AssigneeSelector from "./assignee-selectore";
+import { useAuth } from "../../context/authContext";
 
 
 const priorities = [
@@ -20,6 +23,8 @@ const CreateTask = () => {
     const toggleDrawer = () => setIsOpen(!isOpen);
     const closeDrawer = () => setIsOpen(false);
 
+    const {user} = useAuth();
+
     const [task, setTask] = useState({
       title: "",
       description: "",
@@ -30,6 +35,9 @@ const CreateTask = () => {
       managedBy: ""       
     });
 
+    const [users, setUsers] = useState([]);
+
+    
     const handleChange = useCallback((e: { target: { name: any; value: any; }; }) => {
       const { name, value} = e.target;
       setTask((prev) => ({
@@ -41,8 +49,26 @@ const CreateTask = () => {
 
     const handleSubmit = useCallback(async (e : React.FormEvent<HTMLFormElement>) => {
         e.preventDefault();
-        console.log(task)
+        try {
+          console.log(user)
+          const {data} = await axiosInstance.post('/tasks', {
+            ...task,
+            managedBy: user?._id
+          });
+          console.log(data);
+        } catch (error) {
+          console.log(error);
+        }
     }, [task]);
+
+
+    useEffect(() => {
+      const getUsers = async () => {
+        const {data} = await axiosInstance.get('/users');
+        setUsers(data)
+      }
+      getUsers();
+    }, [])
   
 
   return (
@@ -121,10 +147,10 @@ const CreateTask = () => {
 
 
           <div className="mb-6">
-            <Select
-              value={task.priority}
+            <AssigneeSelector
+              value={task.assignedTo}
               placeholder="Select assignee"
-              options={priorities} 
+              options={users} 
               label={"Select assignee"} 
               name={"assignedTo"} 
               updateChange={handleChange}
