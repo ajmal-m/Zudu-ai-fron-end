@@ -58,15 +58,6 @@ export const TaskProvider = ({ children }: { children: any }) => {
     }, [page, limit, status, order]);
 
 
-    const markTaskDone = useCallback( async (id: string) => {
-      try {
-        
-      } catch (error) {
-        console.log(error);
-      }
-    }, [])
-
-
     useEffect(() => {
         getAllTasks();
     }, [page, limit, status, order])  

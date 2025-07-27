@@ -8,10 +8,12 @@ import Button from "../reusable/button";
 import axiosInstance from "../../lib/axios";
 import { useTaskContext } from "../../context/taskContext";
 import toast from 'react-hot-toast';
+import { useAuth } from "../../context/authContext";
 
 const Card = memo(({ task }:{ task: Task}) => {
 
     const {getAllTasks} = useTaskContext();
+    const {user} = useAuth()
 
     const markTaskDone = useCallback( async () => {
         try {
@@ -66,10 +68,14 @@ const Card = memo(({ task }:{ task: Task}) => {
 
                 {/* Action Button */}
                <div className="flex gap-4">
-                 <EditTask currentTask={task}/>
-                 <DeleteTask task={task}/>
                  {
-                    task.status !== 'Done' && (
+                    ( user?.role === 'admin' || task?.managedBy._id === user?._id || task?.assignedTo?._id === user?._id ) && (<EditTask currentTask={task}/>)
+                 }
+                 {
+                     ( user?.role === 'admin' ) && (<DeleteTask task={task}/>)
+                 }
+                 {
+                    ( task.status !== 'Done' && user?.role === 'admin' ) && (
                         <Button type="button" onClick={markTaskDone}>
                             Mark as Done
                         </Button>      
