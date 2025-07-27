@@ -137,6 +137,7 @@ const CreateTask = () => {
           </div>
 
           <div className="mb-6">
+            <Label text="Due date" type="due date"/>
             <DateInput
               placeholder="Select due date"
               name="dueDate"
