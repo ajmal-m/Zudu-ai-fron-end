@@ -9,10 +9,11 @@ const Login = memo(() => {
 
     const { logInUser, userData, updateUserData , loading} = useLoginStore();
 
-    const handleSubmit = (e: { preventDefault: () => void; }) => {
+    const handleSubmit = useCallback( (e: { preventDefault: () => void; }) => {
+        if(loading) return;
         e.preventDefault();
         logInUser();
-    }
+    }, [])
 
     const updateChecked = useCallback((e :  React.ChangeEvent<HTMLInputElement>) => {
         updateUserData({ name:'isChecked', value: e.target.checked});
