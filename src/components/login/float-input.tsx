@@ -1,12 +1,14 @@
 import { memo, useState } from "react";
+import { useLoginStore } from "../../store/useLoginStore";
 
 
 export const FloatInput = memo(({ label, type, name } : { label: string; type:string; name:string;}) => {
     const [isFocused, setFocused] = useState(false);
-    const [value, setValue] = useState("");
+    const {updateUserData, userData} = useLoginStore();
+
 
     const handleBlur = () => {
-        if (value === "") setFocused(false);
+        if (userData[name] === "") setFocused(false);
     };
     return(
         <>
@@ -18,8 +20,8 @@ export const FloatInput = memo(({ label, type, name } : { label: string; type:st
                     className="w-full border-b-2 border-[#A69999] focus:border-blue-500 outline-none bg-transparent pt-6 pb-1 text-sm"
                     onFocus={() => setFocused(true)}
                     onBlur={handleBlur}
-                    value={value}
-                    onChange={(e) => setValue(e.target.value) }
+                    value={userData[name]}
+                    onChange={(e) => updateUserData({ name, value:e.target.value}) }
                 />
                 <label
                     className={`absolute left-0 text-sm transition-all duration-200 text-[20px] text-[#000000] ${
