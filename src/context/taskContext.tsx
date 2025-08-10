@@ -28,7 +28,7 @@ export const TaskProvider = ({ children }: { children: any }) => {
     const [limit] = useState(10);
     const [totalPages, setTotalPages] = useState(0);
     const [tasks, setTasks] = useState<any[]>([]);
-    const [loading, setLoading] = useState(false);
+    const [loading, setLoading] = useState(true);
     const [status, setStatus] = useState<string | null>(null);
     const [order, setOrder] = useState<string | null>(null);
 
