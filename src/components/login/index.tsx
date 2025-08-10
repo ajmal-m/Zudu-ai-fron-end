@@ -1,108 +1,52 @@
-import { memo, useCallback, useState } from "react";
-import Label from "../reusable/label";
-import Input from "../reusable/input";
-import Button from "../reusable/button";
-import toast from 'react-hot-toast';
-import axiosInstance from "../../lib/axios";
-import { useAuth } from "../../context/authContext";
-import { useNavigate } from "react-router-dom";
-
-
-type FormDatasType = { email: string; password: string;}
+import { memo } from "react";
+import { FloatInput } from "./float-input";
+import AppLogo from '../../assets/logo.svg';
+import LoginLogo from '../../assets/logIn-image.png';
 
 const Login = memo(() => {
 
-    const navigate = useNavigate();
-    const {login} = useAuth();
-
-    const [formData, setFormData] = useState<FormDatasType>({
-        email: "",
-        password: "",
-    });
-
-    const handleChange = useCallback((e: { target: { name: any; value: any; }; }) => {
-        const { name, value} = e.target;
-        setFormData((prev) => ({
-            ...prev,
-            [name]: value,
-        }));
-    }, [formData]);
-
-
-    const handleSubmit = useCallback(async (e : React.FormEvent<HTMLFormElement>) => {
+    const handleSubmit = (e) => {
         e.preventDefault();
-        const formValidated = formValidation(formData);
-        if(formValidated){
-            try {
-                const {data} = await axiosInstance.post("/auth/login", {...formData});
-                login(data);
-                navigate('/')
-            } catch (error: any) {
-                const errorMessage = error?.response?.data?.message;
-                errorMessage && toast.error(errorMessage);
-            }
-        }
-    }, [formData]);
-
-
-    const formValidation= useCallback((values: FormDatasType) => {
-        let formValidated = true;
-
-        if (!values.email.trim()) {
-            formValidated = false;
-            toast.error("Email is required");
-        } else if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(values.email)) {
-            formValidated = false;
-            toast.error("Invalid email format");
-        }
-
-        if (!values.password) {
-            formValidated = false;
-            toast.error("Password is required");
-        }
-        return formValidated;
-
-    }, [formData])
-
+        
+    }
     return(
-        <>
-        <form 
-            className="
-                max-w-sm mx-auto w-full p-4 bg-white border 
-                border-gray-200 rounded-lg shadow-sm sm:p-6 
-                md:p-8 dark:bg-gray-800 dark:border-gray-700
-            " 
-            onSubmit={handleSubmit}
-        >
-            <div className="mb-5">
-                <Label type="email" text="Your email"/>
-                <Input 
-                    type="email" 
-                    name="email" 
-                    value={formData.email} 
-                    updateChange={handleChange} 
-                    placeholder="abc@gmail.com"
-                />
-            </div>
+        <div>
+            <nav className="pt-[34px] px-[20px] flex gap-[15px] items-center">
+                <img src={AppLogo} alt="logo-svg" />
+                <h2 className="text-[#0B3051] text-[25px] font-semibold">VProject0</h2>
+            </nav>
 
-            <div className="mb-5">
-                <Label  type="password" text="Your password"/>
-                <Input 
-                    type="password" 
-                    name="password" 
-                    value={formData.password} 
-                    updateChange={handleChange} 
-                    placeholder="password"
-                />
-            </div>
+            <section className="mt-[15px] flex items-center gap-[87px] justify-center">
+                <img src={LoginLogo} alt="login-logo" />
 
-            <Button type="submit">
-                Login
-            </Button>
+                <div>
+                    <h3 style={{ fontFamily: 'Manrope, sans-serif' }} className="text-[#000000] text-[36px] font-semibold">Welcome back, Yash </h3>
+                    <p className="text-[#000000] text-[20px] mt-[14px]" style={{ fontFamily: '"Space Grotesk", sans-serif'}}>Welcome back! Please enter your details.</p>
 
-        </form>
-        </>
-    )
+                    <form onSubmit={handleSubmit} className="mt-[42px]">
+                        <FloatInput label="Email" name="Email" type="Email"/>
+                        <FloatInput label="Password" name="password" type="password"/>
+                        <div className="mt-[27px] flex justify-between items-center">
+                            <div className="flex items-center gap-2">
+                                <input type="checkbox" name="term" id="term" className="w-[18px] h-[18px] bg-[#FFFFFF] border-[#D5D5D5] dark:bg-[#FFFFFF] dark:border-[#D5D5D5]" />
+                                <p className="text-[#000000] text-[15px]" style={{ fontFamily: '"Space Grotesk", sans-serif'}}>Terms & Conditions </p>
+                            </div>
+                            <div>
+                                <p className="text-[#000000] text-[15px] cursor-pointer underline" style={{ fontFamily: '"Space Grotesk", sans-serif'}}>Forgot Password</p>
+                            </div>
+                        </div>
+                        <button type="submit" style={{ fontFamily: '"Space Grotesk", sans-serif'}} className="cursor-pointer mt-[36px] bg-[#060606] rounded-[6px] w-[430px] h-[60px] flex items-center justify-center text-[white] font-bold text-[16px]">
+                            Login
+                        </button>
+                    </form>
+
+                    <div className="mt-[36px] flex items-center justify-center">
+                        <p style={{ fontFamily: '"Space Grotesk", sans-serif'}} className="text-[#000000] text-[12px]">Don’t have an account?</p><span  style={{ fontFamily: '"Space Grotesk", sans-serif'}} className="ml-[8px] font-medium underline cursor-pointer">Sign up for free</span>
+                    </div>
+                </div>
+            </section>
+        </div>
+    );
 });
 
 export default Login;
