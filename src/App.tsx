@@ -5,7 +5,7 @@ import { lazy, Suspense } from 'react';
 
 import Loader from './components/reusable/loader';
 const Home = lazy(() => import('./components/Home/index'));
-const Login = lazy(() => import('./pages/login'));
+const Login = lazy(() => import('./components/login/index'));
 const Register = lazy(() => import('./pages/register'));
 import ProtectedRoute from './components/ProtectedRoute';
 import { TaskProvider } from './context/taskContext';
