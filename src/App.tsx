@@ -10,6 +10,7 @@ const Register = lazy(() => import('./pages/register'));
 import ProtectedRoute from './components/ProtectedRoute';
 import { TaskProvider } from './context/taskContext';
 import { UserProvider } from './context/usersContext';
+const  Projects = lazy(() => import('./components/projects'));
 
 
 function App() {
@@ -29,6 +30,7 @@ function App() {
           }/>
           <Route path='/login' element={<Login/>}/>
           <Route path='/register' element={<Register/>}/>
+          <Route path='/projects' element={<Projects/>}/>
         </Routes>
       </Suspense>
       <Toaster/>
