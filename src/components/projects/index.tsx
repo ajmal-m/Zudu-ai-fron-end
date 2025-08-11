@@ -30,11 +30,11 @@ const Projects = memo(() => {
                 </div>
                </section>
 
-               <section className="h-[calc(100vh-157px)]">
-                    <div  className="flex flex-wrap p-4 gap-2 h-full overflow-y-auto">
+               <section className="h-[calc(100vh-200px)]">
+                    <div  className="grid sm:grid-cols-1 xl:grid-cols-2 2xl:grid-cols-3 gap-4 p-4 h-full overflow-y-auto">
                        {
                         new Array(10).fill(0).map(_ => (
-                            <div className="h-[304px] w-[465px] bg-[#FFFFFF] p-[16px] rounded-[10px]">
+                            <div className="h-[304px] min-w-[465px] bg-[#FFFFFF] p-[16px] rounded-[10px] border border-[gray]">
                                 <div className="flex justify-between border-b border-[#000000] pb-[16px]">
                                     <h2 className="text-[#000000] text-[25px] font-bold" style={{ fontFamily: "Inter, sans-serif"}}>Adoddle</h2>
                                     <button className="w-[94px] h-[36px] bg-[#83c29d5e] rounded flex items-center justify-center
@@ -65,9 +65,9 @@ const Projects = memo(() => {
                     </div>
                </section>
 
-               {/* Pagination */}
-               <section>
-
+                {/* Pagination */}
+               <section className="w-full h-[34px] bg-red-500 flex items-center justify-center">
+                <p>Pagination</p>
                </section>
             </section>
         </div>
