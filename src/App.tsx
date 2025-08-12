@@ -11,6 +11,7 @@ import ProtectedRoute from './components/ProtectedRoute';
 import { TaskProvider } from './context/taskContext';
 import { UserProvider } from './context/usersContext';
 const  Projects = lazy(() => import('./components/projects'));
+const Tasks = lazy(() => import('./components/task/index'));
 
 
 function App() {
@@ -31,6 +32,7 @@ function App() {
           <Route path='/login' element={<Login/>}/>
           <Route path='/register' element={<Register/>}/>
           <Route path='/projects' element={<Projects/>}/>
+          <Route path='/tasks' element={<Tasks/>}/>
         </Routes>
       </Suspense>
       <Toaster/>
