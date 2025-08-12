@@ -4,11 +4,7 @@ import Sidebar from "../reusable/sidebar";
 import SearchIcon from '../../assets/search-icon.svg';
 import CalenderLogo from '../../assets/calender.svg';
 import DownArrow from '../../assets/drop-down-arrow.svg';
-import MenuIcon from '../../assets/menu.svg';
-import AddIcon from '../../assets/add.svg';
-import clock from '../../assets/clock.svg';
-import Attachment from '../../assets/attachments.svg';
-import Messages from '../../assets/message.svg';
+import TaskList from "../reusable/task-list";
 
 const Tasks = memo(() => {
 
@@ -59,97 +55,7 @@ const Tasks = memo(() => {
                     <div className="mt-[34px] flex items-center gap-[38px]">
                         {
                             ["Backlog" ,"In progress", "Completed"].map(_ => (
-                                <div className="w-[437px] h-[691px] bg-[#ffff] rounded-[8px]">
-                                    <div 
-                                        className="
-                                            flex justify-between items-center h-[50px] bg-[#CCCCCC] 
-                                            rounded-[8px] rounded-b-none px-[20px]
-                                        "
-                                    >
-                                        <h1 className="text-[#223759] text-[16px] font-medium font-roboto">{_}</h1>
-                                        <img src={MenuIcon} alt="menu-icon" />
-                                    </div>
-
-                                    <div className="flex flex-col items-center gap-[20px] mt-[20px]">
-                                        <button
-                                            className="
-                                                w-[391px] h-[40px] border border-dashed
-                                                rounded-[8px] border-[#067C89]
-                                                flex items-center justify-center
-                                            "
-                                        >
-                                            <img src={AddIcon} alt="add_icon" />
-                                        </button>
-
-                                        <div
-                                            className="
-                                                w-[391px] h-[143px] bg-[#FFFFFF]
-                                                rounded-[8px] p-[15px] pb-[10px] border
-                                                border-gray-300
-                                            "
-                                        >
-                                            <div className="flex justify-between">
-                                                <h2 
-                                                    className="
-                                                        text-[#223759] text-[24px] font-medium font-roboto
-                                                        leading-[24px]
-                                                    "
-                                                >
-                                                    Usability Testing
-                                                </h2>
-
-                                                <div className="flex items-center gap-[12px]">
-                                                    <img src={clock} alt="clock_icon" />
-                                                    <p className="text-[#6F6F70] text-[14px] font-light font-roboto">12 Days</p>
-                                                </div>
-                                            </div>
-
-                                            <div className="mt-[15px]">
-                                                <p 
-                                                    className="
-                                                        text-[14px] font-roboto font-light
-                                                        text-[#6F6F70]
-                                                        leading-[129%] max-w-[227px]
-                                                    "
-                                                >
-                                                    Design new user interface design for food delivery app
-                                                </p>
-                                            </div>
-
-                                            <div className="mt-[12px] flex items-center justify-between">
-                                                <div className="flex items-center gap-[30px]">
-                                                    <div className="flex items-center gap-[10px]">
-                                                        <img src={Attachment} alt="attachments" />
-                                                        <p className="text-[14px] font-light font-roboto text-[#6F6F70]">2</p>
-                                                    </div>
-                                                    <div  className="flex items-center gap-[10px]">
-                                                        <img src={Messages} alt="message"  />
-                                                        <p className="text-[14px] font-light font-roboto text-[#6F6F70]">15</p>
-
-                                                    </div>
-                            
-                                                </div>
-
-                                                <div className="flex items-center gap-[5px]">
-                                                    <img src={AddIcon} alt="add-icon"/>
-                                                    <div className="flex -space-x-1 rtl:space-x-reverse">
-                                                        {
-                                                            new Array(3).fill(0).map((_, index) => (
-                                                                <img
-                                                                    className="w-[26px] h-[26px] border-2 border-white rounded-full"
-                                                                    src="https://media.istockphoto.com/id/1682296067/photo/happy-studio-portrait-or-professional-man-real-estate-agent-or-asian-businessman-smile-for.jpg?s=612x612&w=0&k=20&c=9zbG2-9fl741fbTWw5fNgcEEe4ll-JegrGlQQ6m54rg="
-                                                                    alt="Profile 5"
-                                                                />
-                                                            ))
-                                                        }
-                                                       
-                                                        
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
+                                <TaskList status={_}/>
                             ))
                         }
                     </div>
